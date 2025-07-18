@@ -5,13 +5,12 @@ import torch.nn.functional as F
 class CNNEncoder(nn.Module):
     def __init__(self):
         super().__init__()
-        HIDDEN_DIM = 32
         self.net = nn.Sequential(
-            nn.Conv1d(3, HIDDEN_DIM, 25, 2, 12),
+            nn.Conv1d(3, 16, 25, 2, 12),
             nn.ReLU(),
-            nn.Conv1d(HIDDEN_DIM, HIDDEN_DIM, 25, 2, 12),
+            nn.Conv1d(16, 32, 25, 2, 12),
             nn.ReLU(),
-            nn.Conv1d(HIDDEN_DIM, HIDDEN_DIM, 25, 2, 12),
+            nn.Conv1d(32, 32, 25, 2, 12),
             nn.ReLU()
         )
 
@@ -25,12 +24,12 @@ class TimeAttentionMIL(nn.Module):
         DROPOUT = 0.3
         self.encoder = encoder
         self.attn = nn.Sequential(
-            nn.Linear(HIDDEN_DIM, 64),
+            nn.Linear(32, 64),
             nn.Tanh(),
             nn.Linear(64, 1)
         )
         self.mlp = nn.Sequential(
-            nn.Linear(HIDDEN_DIM, 64),
+            nn.Linear(32, 64),
             nn.ReLU(),
             nn.Dropout(DROPOUT),
             nn.Linear(64, 1)
