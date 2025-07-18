@@ -20,9 +20,7 @@ def scan_record(fp, label, segments_per_record):
                 k for k in f['segments'].keys()
                 if any(s == b'S' for s in f['segments'][k]['annotation']['Symbol'][...])
             ]
-            if len(valid_keys) < 3:
-                return None
-
+            
             total = segments_per_record
             v = len(valid_keys)
             if v >= total:
